@@ -5,30 +5,54 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>SmartSchool - ระบบเช็คชื่อ & แดชบอร์ดสรุปยอดโรงเรียน</title>
+  <link rel="icon" type="image/jpeg" href="https://i.ibb.co/k2MWLzb1/642768993-1941877609748834-2263063250765183521-n-1.jpg">
 
-  <!-- Authoritative Enterprise Typography: IBM Plex Sans Thai -->
+  <!-- Fallback Typography: IBM Plex Sans Thai -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Chart.js, Lucide Icons & SheetJS (Excel Parser) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <style>
 /* ==========================================================================
+   ติดตั้งฟอนต์ Mornamchi (Custom Font Setup)
+   ========================================================================== */
+@font-face {
+  font-family: 'Mornamchi';
+  src: url('./fonts/Mornamchi-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mornamchi';
+  src: url('./fonts/Mornamchi-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Mornamchi';
+  src: url('./fonts/Mornamchi-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ==========================================================================
    SmartSchool Enterprise OS - Human-Crafted Educational Design System
-   Bespoke Academic Command Center | Linear & Stripe Inspired Architecture
-   Designed for Ministry of Education Standards: High-Density, Fast, Accessible
    ========================================================================== */
 
 :root {
-  /* Typography System */
-  --font-th: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-en: 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-th: 'Mornamchi', 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-en: 'Mornamchi', 'IBM Plex Sans Thai', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
-  /* Surfaces & Atmosphere (Layered Crisp Slate & Pure Canvas) */
   --bg-main: #F4F6FA;
   --bg-card: #FFFFFF;
   --bg-subtle: #EEF2F6;
@@ -37,7 +61,6 @@
   --bg-glass: rgba(255, 255, 255, 0.92);
   --bg-glass-dock: rgba(255, 255, 255, 0.96);
 
-  /* Brand Identity: Oxford Prestige Navy & Electric Cobalt */
   --primary: #1D4ED8;
   --primary-hover: #1E40AF;
   --primary-active: #172554;
@@ -46,7 +69,6 @@
   --primary-text: #1E3A8A;
   --brand-navy: #0B132B;
 
-  /* Semantic Operational Tokens (High-Contrast Signal Colors) */
   --present: #046C4E;
   --present-hover: #046C4E;
   --present-bg: #EDFDF5;
@@ -75,13 +97,11 @@
   --leave-border: #BAE6FD;
   --leave-text: #075985;
 
-  /* Neutral Text Scale */
   --text-main: #0F172A;
   --text-muted: #475569;
   --text-light: #475569;
   --text-placeholder: #94A3B8;
 
-  /* Structural Borders & Natural Multi-Layer Shadows */
   --border-subtle: #E2E8F0;
   --border-medium: #CBD5E1;
   --border-strong: #94A3B8;
@@ -94,7 +114,6 @@
   --shadow-dock: 0 -8px 30px -4px rgba(15, 23, 42, 0.1);
   --shadow-modal: 0 20px 40px -10px rgba(15, 23, 42, 0.18), 0 0 0 1px rgba(15, 23, 42, 0.06);
 
-  /* Radii */
   --radius-xl: 16px;
   --radius-lg: 12px;
   --radius-md: 8px;
@@ -102,12 +121,10 @@
   --radius-full: 9999px;
   --radius-pill: 9999px;
 
-  /* Layout Geometry */
   --sidebar-width: 260px;
   --topbar-height: 64px;
 }
 
-/* Dark Theme */
 [data-theme="dark"] {
   --bg-main: #090D16;
   --bg-card: #0F172A;
@@ -260,16 +277,25 @@ body {
 }
 
 .sidebar-logo {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: var(--radius-md);
-  background: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
   flex-shrink: 0;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.sidebar-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-md) - 2px);
 }
 
 .sidebar-title h1 {
@@ -1188,15 +1214,25 @@ body {
 }
 
 .report-official-emblem {
-  width: 58px;
-  height: 58px;
+  width: 64px;
+  height: 64px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%);
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1);
   margin-bottom: 1rem;
+  overflow: hidden;
+  padding: 2px;
+}
+
+.report-official-emblem img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
 }
 
 .report-official-title {
@@ -1436,16 +1472,25 @@ body {
 }
 
 .login-emblem-wrap {
-  width: 48px;
-  height: 48px;
+  width: 64px;
+  height: 64px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, #1E40AF 0%, #1D4ED8 100%);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
-  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+  padding: 3px;
+}
+
+.login-emblem-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: calc(var(--radius-lg) - 3px);
 }
 
 .login-hero-title {
@@ -1850,10 +1895,10 @@ body {
     <aside class="sidebar" id="appSidebar">
       <div class="sidebar-brand">
         <div class="sidebar-logo">
-          <i data-lucide="graduation-cap" style="width: 22px; height: 22px;"></i>
+          <img src="https://i.ibb.co/k2MWLzb1/642768993-1941877609748834-2263063250765183521-n-1.jpg" alt="ตราโรงเรียน">
         </div>
         <div class="sidebar-title">
-          <h1>SmartSchool</h1>
+          <h1>MSU CONNECT</h1>
           <p>ระบบบริหารข้อมูลโรงเรียน</p>
         </div>
       </div>
@@ -1934,7 +1979,7 @@ body {
       </div>
 
       <div class="sidebar-footer-note" id="sidebarFooterNote" onclick="navigate('settings')" style="cursor: pointer;" title="คลิกเพื่อดูการเชื่อมต่อชีต">
-        เชื่อมต่อ Google Sheets 100%<br>อัปเดตข้อมูลอัตโนมัติแบบเรียลไทม์
+        เชื่อมต่อเรีบร้อย
       </div>
     </aside>
 
@@ -1988,7 +2033,7 @@ body {
 
       <!-- VIEW 1: Dashboard -->
       <div class="page-container" id="dashboardView" style="display: none;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-size: 0.8rem; color: var(--text-light); flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-size: 0.8rem; color: var(--text-light); flex-wrap: gap: 8px;">
           <div style="display: flex; align-items: center; gap: 6px;">
             <i data-lucide="layout-dashboard" style="width: 14px; height: 14px; color: var(--primary);"></i>
             <span style="font-weight: 600; color: var(--text-main);">ภาพรวมการเช็คชื่อประจำวัน</span>
@@ -2253,7 +2298,7 @@ body {
 
             <div class="report-official-header">
               <div class="report-official-emblem">
-                <i data-lucide="school" style="width: 28px; height: 28px; color: #ffffff;"></i>
+                <img src="https://i.ibb.co/k2MWLzb1/642768993-1941877609748834-2263063250765183521-n-1.jpg" alt="ตราสถานศึกษา">
               </div>
               <div class="report-official-title" id="repDocTitle">แบบรายงานสรุปสถิติการมาเรียนของนักเรียน</div>
               <div class="report-official-subtitle" id="repDocSchoolInfo">ระบบโรงเรียนอัจฉริยะ SmartSchool</div>
@@ -2330,13 +2375,13 @@ body {
               <div class="signature-box">
                 <div>(ลงชื่อ) ................................................................</div>
                 <div class="signature-line"></div>
-                <div style="font-weight: 700;" id="repSigDeputyName">( นางสาววิภาดา รัตนมณี )</div>
+                <div style="font-weight: 700;" id="repSigDeputyName">( นายกุลพล สิทธิ์นันท์ )</div>
                 <div style="font-size: 0.78rem; color: var(--text-muted);">รองผู้อำนวยการ</div>
               </div>
               <div class="signature-box">
                 <div>(ลงชื่อ) ................................................................</div>
                 <div class="signature-line"></div>
-                <div style="font-weight: 700;" id="repSigDirectorName">( ดร. สมเกียรติ สว่างวงศ์ )</div>
+                <div style="font-weight: 700;" id="repSigDirectorName">( นายปุญญพัตน์ เอี่ยมวอน )</div>
                 <div style="font-size: 0.78rem; color: var(--text-muted);">ผู้อำนวยการสถานศึกษา</div>
               </div>
             </div>
@@ -2444,7 +2489,7 @@ body {
 
       <div class="login-hero-header">
         <div class="login-emblem-wrap">
-          <i data-lucide="graduation-cap" style="width: 26px; height: 26px;"></i>
+          <img src="https://i.ibb.co/k2MWLzb1/642768993-1941877609748834-2263063250765183521-n-1.jpg" alt="ตราสถานศึกษา">
         </div>
         <h3 class="login-hero-title" id="loginModalTitle">เข้าสู่ระบบ SmartSchool</h3>
         <p class="login-hero-sub">ระบบเช็คชื่อ & แดชบอร์ดสรุปสถิตินักเรียนรายวัน</p>
@@ -2622,7 +2667,7 @@ body {
           get(target, prop) {
             if (prop === 'withSuccessHandler') return (fn) => createGasProxy(fn, failureHandler);
             if (prop === 'withFailureHandler') return (fn) => createGasProxy(successHandler, fn);
-            
+
             return async (...args) => {
               try {
                 const response = await fetch(GAS_WEB_APP_URL, {
@@ -2646,6 +2691,17 @@ body {
       window.google = window.google || {};
       window.google.script = window.google.script || {};
       window.google.script.run = createGasProxy();
+    }
+
+    // ฟังก์ชันส่วนกลางสำหรับเรนเดอร์ไอคอน Lucide อย่างปลอดภัย
+    function refreshIcons() {
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        try {
+          lucide.createIcons();
+        } catch (e) {
+          console.warn('Lucide icon render error:', e);
+        }
+      }
     }
 
     /* ==============================================================
@@ -2691,7 +2747,7 @@ body {
       toast.className = 'toast-item-clean';
       toast.innerHTML = `<i data-lucide="check-circle-2" style="width: 17px; height: 17px; color: var(--present); flex-shrink: 0;"></i><span>${msg}</span>`;
       container.appendChild(toast);
-      lucide.createIcons();
+      refreshIcons();
       setTimeout(() => toast.classList.add('show'), 10);
       setTimeout(() => {
         toast.classList.remove('show');
@@ -2702,7 +2758,7 @@ body {
     function openModal(id) {
       const el = document.getElementById(id);
       if (el) el.classList.add('open');
-      lucide.createIcons();
+      refreshIcons();
     }
 
     function closeModal(id) {
@@ -2730,6 +2786,7 @@ body {
         if (closeBtn) closeBtn.style.display = 'inline-flex';
         if (modal) modal.classList.remove('force-auth');
       }
+      refreshIcons();
     }
 
     function checkUserSession() {
@@ -2833,6 +2890,7 @@ body {
       html.setAttribute('data-theme', newTheme);
       localStorage.setItem('smartschool-theme', newTheme);
       renderModernCharts();
+      refreshIcons();
     }
 
     function navigate(view) {
@@ -2859,6 +2917,7 @@ body {
       }
       if (view === 'attendance') loadStudentList();
       if (view === 'reports') fetchReportData();
+      refreshIcons();
     }
 
     function renderModernCharts(trendData = null) {
@@ -2919,6 +2978,7 @@ body {
               renderRiskStudentsTable();
             }
             if (res.trend) renderModernCharts(res.trend);
+            refreshIcons();
           }
         })
         .api_getDirectorDashboard(token, currentAttendanceDate, 7);
@@ -2943,6 +3003,7 @@ body {
         `;
         container.appendChild(item);
       });
+      refreshIcons();
     }
 
     function renderRiskStudentsTable() {
@@ -2966,6 +3027,7 @@ body {
         `;
         tbody.appendChild(tr);
       });
+      refreshIcons();
     }
 
     function updateClassSelectOptions() {
@@ -3038,7 +3100,7 @@ body {
       });
 
       updateTallyCount();
-      lucide.createIcons();
+      refreshIcons();
     }
 
     function setStudentState(id, st) {
@@ -3133,6 +3195,7 @@ body {
               `;
               tbody.appendChild(tr);
             });
+            refreshIcons();
           }
         })
         .api_getReport({ type: currentReportType, date: dateVal }, token);
@@ -3178,7 +3241,6 @@ body {
       renderCompactStudentList();
     }
 
-    // Smart Importer logic
     let parsedImportStudentsList = [];
     function openImportStudentsModal() {
       openModal('importStudentsModal');
@@ -3237,6 +3299,7 @@ body {
         `;
         tbody.appendChild(tr);
       });
+      refreshIcons();
     }
 
     function clearImportAll() {
@@ -3341,8 +3404,14 @@ body {
       const dateDisplay = document.getElementById('currentDateDisplay');
       if (dateDisplay) dateDisplay.innerText = formatThaiDate();
 
+      refreshIcons();
       checkUserSession();
+    });
+
+    window.addEventListener('load', () => {
+      refreshIcons();
     });
   </script>
 </body>
+
 </html>
